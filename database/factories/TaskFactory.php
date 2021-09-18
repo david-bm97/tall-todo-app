@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Task;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class TaskFactory extends Factory
@@ -49,6 +50,13 @@ class TaskFactory extends Factory
     {
         return $this->state([
             'completed' => true
+        ]);
+    }
+
+    public function withEndDate(Carbon $end_date)
+    {
+        return $this->state([
+            'end_date' => $end_date
         ]);
     }
 }

@@ -38,6 +38,11 @@ class Task extends Model
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * Get if the Task end_date is past
+     *
+     * @return boolean
+     */
     public function getIsPastAttribute()
     {
         if (is_null($this->end_date)) {
