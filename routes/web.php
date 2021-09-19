@@ -8,7 +8,7 @@ use App\Http\Livewire\Auth\Passwords\Email;
 use App\Http\Livewire\Auth\Passwords\Reset;
 use App\Http\Livewire\Auth\Register;
 use App\Http\Livewire\Auth\Verify;
-use App\Http\Livewire\Tasks\ShowTasksList;
+use App\Http\Livewire\Pages\Tasks\TasksListPage;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -61,6 +61,6 @@ Route::middleware('auth')->group(function () {
 
 Route::middleware('auth')->group(function () {
     Route::prefix('tasks')->group(function () {
-        Route::get('list', ShowTasksList::class)->name('tasks.list');
+        Route::get('list', TasksListPage::class)->name('tasks.list');
     });
 });

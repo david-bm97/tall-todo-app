@@ -19,21 +19,21 @@ class TasksListItemTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_contains_task_data()
+    public function test_list_item_task_contains_task_data()
     {
         $task = Task::factory()->ofUser($this->user)->create();
-        Livewire::test('tasks.task-list-item', ['task' => $task])
+        Livewire::test('components.tasks.task-list-item', ['task' => $task])
             ->assertSee($task->name);
     }
 
-    public function test_can_mark_completed()
+    public function test_list_item_task_can_mark_completed()
     {
         $task = Task::factory()
             ->ofUser($this->user)
             ->uncompleted()
             ->create();
-        
-        Livewire::test('tasks.task-list-item', ['task' => $task])
+
+        Livewire::test('components.tasks.task-list-item', ['task' => $task])
             ->set('task.completed', true)
             ->assertSet('task.completed', true);
 
@@ -43,14 +43,14 @@ class TasksListItemTest extends TestCase
         ]);
     }
 
-    public function test_can_unmark_completed()
+    public function test_list_item_task_can_unmark_completed()
     {
         $task = Task::factory()
             ->ofUser($this->user)
             ->completed()
             ->create();
-        
-        Livewire::test('tasks.task-list-item', ['task' => $task])
+
+        Livewire::test('components.tasks.task-list-item', ['task' => $task])
             ->set('task.completed', false)
             ->assertSet('task.completed', false);
 

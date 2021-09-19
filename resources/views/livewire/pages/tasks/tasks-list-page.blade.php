@@ -6,7 +6,7 @@
     </div>
     <div class="flex flex-col p-8 space-y-4 bg-base-200 rounded-box">
         @foreach ($tasks as $task)
-            @livewire('tasks.task-list-item', ['task' => $task], key($task->id))
+            @livewire('components.tasks.task-list-item', ['task' => $task], key($task->id))
         @endforeach
     </div>
     <div class="my-4">

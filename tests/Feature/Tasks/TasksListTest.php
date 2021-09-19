@@ -19,18 +19,18 @@ class TasksListTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_contains_livewire_component()
+    public function test_tasks_list_page_is_livewire_component()
     {
         $this->actingAs($this->user)
             ->get(route('tasks.list'))
-            ->assertSeeLivewire('tasks.show-tasks-list');
+            ->assertSeeLivewire('pages.tasks.tasks-list-page');
     }
 
-    public function test_contains_task_list_item()
+    public function test_tasks_list_page_contains_task_list_item_component()
     {
         $task = Task::factory()->ofUser($this->user)->create();
         Livewire::actingAs($this->user)
-            ->test('tasks.show-tasks-list')
+            ->test('pages.tasks.tasks-list-page')
             ->assertSee($task->name);
     }
 }

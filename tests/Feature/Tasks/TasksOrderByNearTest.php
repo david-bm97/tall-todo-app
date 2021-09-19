@@ -14,10 +14,10 @@ class TasksOrderByNearTest extends TestCase
     public function test_tasks_ordered_by_near_works()
     {
         $nearest = Task::factory()
-            ->withEndDate(now()->subDay())
+            ->withEndDate(now()->addDay())
             ->create();
         Task::factory()
-            ->withEndDate(now()->subWeek())
+            ->withEndDate(now()->addWeek())
             ->create();
 
         $tasks = Task::orderByNear()->get();

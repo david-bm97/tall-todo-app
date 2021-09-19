@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Livewire\Tasks;
+namespace App\Http\Livewire\Pages\Tasks;
 
 use App\Models\Task;
 use Illuminate\Support\Facades\App;
 use Livewire\Component;
 use Livewire\WithPagination;
 
-class ShowTasksList extends Component
+class TasksListPage extends Component
 {
     use WithPagination;
 
@@ -17,8 +17,8 @@ class ShowTasksList extends Component
             ->tasks()
             ->orderByNear()
             ->paginate(10);
-        
-        return view('livewire.tasks.show-tasks-list', [
+
+        return view('livewire.pages.tasks.tasks-list-page', [
             'tasks' => $tasks
         ]);
     }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Tasks;
+namespace App\Http\Livewire\Components\Tasks;
 
 use App\Models\Task;
 use Livewire\Component;
@@ -30,6 +30,6 @@ class TaskListItem extends Component
 
     public function render()
     {
-        return view('livewire.tasks.task-list-item');
+        return view('livewire.components.tasks.task-list-item');
     }
 }
