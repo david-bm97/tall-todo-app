@@ -14,8 +14,11 @@
                 <div tabindex="0" class="m-1 btn">{{ auth()->user()->email }}</div>
                 <ul tabindex="0" class="p-2 shadow menu dropdown-content bg-base-100 rounded-box">
                     <li>
-                        <a href="{{ route('logout') }}">Logout</a>
-                    </li> 
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+                            <button type="submit">Logout</button>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>

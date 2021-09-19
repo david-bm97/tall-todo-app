@@ -32,4 +32,12 @@ class TaskListItem extends Component
     {
         return view('livewire.components.tasks.task-list-item');
     }
+
+    public function delete()
+    {
+        $this->task->delete();
+        $this->task = null;
+        $this->emit('taskDeleted');
+        $this->dispatchBrowserEvent('show-toast', ['text' => 'Task deleted']);
+    }
 }

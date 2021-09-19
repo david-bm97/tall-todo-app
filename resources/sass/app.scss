@@ -41,6 +41,11 @@
 @tailwind utilities;
 
 /**
+ * Packages files
+ */
+@import "~toastify-js/src/toastify.css";
+
+/**
  * Here you would add any custom utilities you need that don't come out of the
  * box with Tailwind.
  *

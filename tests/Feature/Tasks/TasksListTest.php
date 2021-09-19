@@ -33,4 +33,18 @@ class TasksListTest extends TestCase
             ->test('pages.tasks.tasks-list-page')
             ->assertSee($task->name);
     }
+
+    public function test_tasks_list_page_can_refresh_tasks()
+    {
+        Livewire::actingAs($this->user)
+            ->test('pages.tasks.tasks-list-page')
+            ->call('refreshTasks');
+    }
+
+    public function test_tasks_list_page_has_task_deleted_listener()
+    {
+        Livewire::actingAs($this->user)
+            ->test('pages.tasks.tasks-list-page')
+            ->emit('taskDeleted');
+    }
 }

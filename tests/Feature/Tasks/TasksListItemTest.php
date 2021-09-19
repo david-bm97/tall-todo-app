@@ -59,4 +59,22 @@ class TasksListItemTest extends TestCase
             'completed' => false
         ]);
     }
+
+    public function test_list_item_task_can_be_deleted()
+    {
+        $task = Task::factory()
+            ->ofUser($this->user)
+            ->create();
+
+        Livewire::test('components.tasks.task-list-item', ['task' => $task])
+            ->call('delete')
+            ->assertHasNoErrors()
+            ->assertSet('task', null)
+            ->assertEmitted('taskDeleted')
+            ->assertDispatchedBrowserEvent('show-toast', ['text' => 'Task deleted']);
+
+        $this->assertDatabaseMissing('tasks', [
+            'id' => $task->id
+        ]);
+    }
 }
