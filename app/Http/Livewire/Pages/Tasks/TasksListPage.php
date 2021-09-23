@@ -11,7 +11,10 @@ class TasksListPage extends Component
 {
     use WithPagination;
 
-    protected $listeners = ['taskDeleted' => 'refreshTasks'];
+    protected $listeners = [
+        'taskDeleted' => 'refreshTasks',
+        'taskCreated' => 'refreshTasks',
+    ];
 
     public function render()
     {

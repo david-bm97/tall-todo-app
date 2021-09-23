@@ -47,4 +47,11 @@ class TasksListTest extends TestCase
             ->test('pages.tasks.tasks-list-page')
             ->emit('taskDeleted');
     }
+
+    public function test_tasks_list_page_has_task_created_listener()
+    {
+        Livewire::actingAs($this->user)
+            ->test('pages.tasks.tasks-list-page')
+            ->emit('taskCreated');
+    }
 }

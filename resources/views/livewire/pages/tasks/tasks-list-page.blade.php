@@ -1,6 +1,12 @@
 <div class="container">
+    <x-modal id="create-form-modal">
+        @livewire('components.tasks.task-create-form')
+    </x-modal>
     <div class="tooltip tooltip-right" data-tip="Create a new task">
-        <button class="mb-2 btn btn-circle">
+        <button
+            class="mb-2 btn btn-circle"
+            onclick="showModal('create-form-modal')"
+            >
             <x-heroicon-o-plus class="w-6 h-6"/>
         </button>
     </div>
