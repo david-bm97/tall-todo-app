@@ -22,12 +22,15 @@ class UpdateTaskFormTest extends TestCase
     public function test_can_update_task()
     {
         $task = Task::factory()->create();
-        $name = $this->faker->sentence(4);
-        $description = $this->faker->paragraph;
+        $name = $this->faker->sentence(2);
+        $description = $this->faker->paragraph(2);
         Livewire::actingAs($this->user)
             ->test('components.tasks.task-create-update-form', ['task' => $task])
             ->assertSet('name', $task->name)
             ->assertSet('description', $task->description)
+            ->assertSet('completed', $task->completed)
+            ->assertSet('end_date', $task->end_date->format('Y-m-d'))
+            ->assertSet('task_id', $task->id)
             ->assertSeeHtml('wire:submit.prevent="update"')
             ->assertSeeHtml('wire:model="name"')
             ->assertSeeHtml('wire:model="description"')
@@ -39,7 +42,7 @@ class UpdateTaskFormTest extends TestCase
             ->set('end_date', $this->faker->date)
             ->call('update')
             ->assertHasNoErrors()
-            ->assertEmitted('taskUpdated')
+            ->assertEmitted('taskUpdated', $task->id)
             ->assertDispatchedBrowserEvent('hide-modal')
             ->assertDispatchedBrowserEvent('show-toast');
 
@@ -48,5 +51,13 @@ class UpdateTaskFormTest extends TestCase
             'name' => $name,
             'description' => $description
         ]);
+    }
+
+    public function test_has_on_update_listener()
+    {
+        $task = Task::factory()->create();
+        Livewire::actingAs($this->user)
+            ->test('components.tasks.task-create-update-form', ['task' => $task])
+            ->emit("set-task-on-update-form-{$task->id}");
     }
 }

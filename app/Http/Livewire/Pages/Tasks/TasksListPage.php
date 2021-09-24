@@ -2,8 +2,6 @@
 
 namespace App\Http\Livewire\Pages\Tasks;
 
-use App\Models\Task;
-use Illuminate\Support\Facades\App;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,7 +12,7 @@ class TasksListPage extends Component
     protected $listeners = [
         'taskDeleted' => 'refreshTasks',
         'taskCreated' => 'refreshTasks',
-        'taskUpdated' => 'refreshTasks',
+        'taskUpdated' => 'onTaskUpdated',
     ];
 
     public function render()
@@ -23,6 +21,12 @@ class TasksListPage extends Component
         return view('livewire.pages.tasks.tasks-list-page', [
             'tasks' => $tasks
         ]);
+    }
+
+    public function onTaskUpdated($task_id)
+    {
+        $this->emit("refresh-task-item-{$task_id}");
+        $this->emit("set-task-on-update-form-{$task_id}");
     }
 
     public function refreshTasks()

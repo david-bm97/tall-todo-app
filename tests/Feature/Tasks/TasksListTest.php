@@ -57,8 +57,11 @@ class TasksListTest extends TestCase
 
     public function test_tasks_list_page_has_task_updated_listener()
     {
+        $task = Task::factory()->create();
         Livewire::actingAs($this->user)
             ->test('pages.tasks.tasks-list-page')
-            ->emit('taskUpdated');
+            ->emit('taskUpdated', $task->id)
+            ->assertEmitted("refresh-task-item-{$task->id}")
+            ->assertEmitted("set-task-on-update-form-{$task->id}");
     }
 }

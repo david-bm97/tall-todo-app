@@ -35,7 +35,8 @@ class TasksListItemTest extends TestCase
 
         Livewire::test('components.tasks.task-list-item', ['task' => $task])
             ->set('task.completed', true)
-            ->assertSet('task.completed', true);
+            ->assertSet('task.completed', true)
+            ->assertEmitted('taskUpdated', $task->id);
 
         $this->assertDatabaseHas('tasks', [
             'id' => $task->id,
@@ -52,7 +53,8 @@ class TasksListItemTest extends TestCase
 
         Livewire::test('components.tasks.task-list-item', ['task' => $task])
             ->set('task.completed', false)
-            ->assertSet('task.completed', false);
+            ->assertSet('task.completed', false)
+            ->assertEmitted('taskUpdated', $task->id);
 
         $this->assertDatabaseHas('tasks', [
             'id' => $task->id,
@@ -76,5 +78,13 @@ class TasksListItemTest extends TestCase
         $this->assertDatabaseMissing('tasks', [
             'id' => $task->id
         ]);
+    }
+
+    public function test_has_refresh_tash_listener()
+    {
+        $task = Task::factory()->create();
+        Livewire::actingAs($this->user)
+            ->test('components.tasks.task-list-item', ['task' => $task])
+            ->emit("refresh-task-item-{$task->id}");
     }
 }

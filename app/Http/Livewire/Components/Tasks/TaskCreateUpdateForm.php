@@ -20,14 +20,22 @@ class TaskCreateUpdateForm extends Component
         'end_date' => 'required|date'
     ];
 
+    public function getListeners()
+    {
+        if ($this->task_id) {
+            return array_merge($this->listeners, [
+                "set-task-on-update-form-{$this->task_id}" => 'setTask',
+            ]);
+        }
+
+        return $this->listeners;
+    }
+
     public function mount(Task $task = null)
     {
-        if ($task) {
+        if ($task->id) {
             $this->task_id = $task->id;
-            $this->name = $task->name;
-            $this->description = $task->description;
-            $this->completed = $task->completed;
-            $this->end_date = $task->end_date;
+            $this->setTask($task->id);
         }
     }
 
@@ -39,6 +47,15 @@ class TaskCreateUpdateForm extends Component
             'creating' => $creating,
             'action' => $action
         ]);
+    }
+
+    public function setTask()
+    {
+        $task = Task::findOrFail($this->task_id);
+        $this->name = $task->name;
+        $this->description = $task->description;
+        $this->completed = $task->completed;
+        $this->end_date = $task->end_date ? $task->end_date->format('Y-m-d') : null;
     }
 
     public function create()
@@ -60,7 +77,7 @@ class TaskCreateUpdateForm extends Component
         $attributes = $this->validate();
         $attributes['user_id'] = auth()->id();
         Task::findOrFail($this->task_id)->update($attributes);
-        $this->emit('taskUpdated');
+        $this->emit('taskUpdated', $this->task_id);
         $this->dispatchBrowserEvent('hide-modal', ['id' => 'update-form-modal']);
         $this->dispatchBrowserEvent('show-toast', ['text' => 'Task correctly updated!']);
     }
