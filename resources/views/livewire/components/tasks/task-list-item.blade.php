@@ -1,6 +1,9 @@
 <div>
+    <x-modal id="update-form-modal-{{ $task->id }}">
+        @livewire('components.tasks.task-create-update-form', ['task' => $task])
+    </x-modal>
     @if (!is_null($task))
-        <div class="shadow-lg card compact side bg-base-100 overflow-visible">
+        <div class="overflow-visible shadow-lg card compact side bg-base-100">
             <div class="flex-row items-center justify-between space-x-4 card-body">
                 <div class="flex">
                     <span class="mx-4 label-text">{{ $displayName }}</span>
@@ -31,6 +34,9 @@
                         >
                         <input type="checkbox" wire:loading.attr="disabled" wire:model="task.completed" class="checkbox checkbox-accent">
                     </label>
+                    <button class="btn btn-sm btn-error" onclick="showModal('update-form-modal-{{ $task->id }')">
+                        <x-heroicon-o-pencil-alt class="w-4 h-4"/>
+                    </button>
                     <button class="btn btn-sm btn-error" wire:loading.attr="disabled" wire:click="delete">
                         <x-heroicon-o-trash class="w-4 h-4"/>
                     </button>

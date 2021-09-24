@@ -1,5 +1,5 @@
 function showModal(id) {
-	window.location.hash = "#create-form-modal";
+	window.location.hash = `#${id}`;
 }
 function hideModal(id) {
 	window.location.hash = "";

@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
-class CreateTaskFormTest extends TestCase
+class UpdateTaskFormTest extends TestCase
 {
     use RefreshDatabase, WithFaker;
 
@@ -19,13 +19,16 @@ class CreateTaskFormTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_can_create_task()
+    public function test_can_update_task()
     {
+        $task = Task::factory()->create();
         $name = $this->faker->sentence(4);
         $description = $this->faker->paragraph;
         Livewire::actingAs($this->user)
-            ->test('components.tasks.task-create-update-form')
-            ->assertSeeHtml('wire:submit.prevent="create"')
+            ->test('components.tasks.task-create-update-form', ['task' => $task])
+            ->assertSet('name', $task->name)
+            ->assertSet('description', $task->description)
+            ->assertSeeHtml('wire:submit.prevent="update"')
             ->assertSeeHtml('wire:model="name"')
             ->assertSeeHtml('wire:model="description"')
             ->assertSeeHtml('wire:model="completed"')
@@ -34,16 +37,14 @@ class CreateTaskFormTest extends TestCase
             ->set('description', $description)
             ->set('completed', $this->faker->boolean)
             ->set('end_date', $this->faker->date)
-            ->call('create')
+            ->call('update')
             ->assertHasNoErrors()
-            ->assertEmitted('taskCreated')
+            ->assertEmitted('taskUpdated')
             ->assertDispatchedBrowserEvent('hide-modal')
-            ->assertDispatchedBrowserEvent('show-toast')
-            ->assertSet('name', null)
-            ->assertSet('description', null)
-            ->assertSet('completed', false)
-            ->assertSet('end_date', null);
+            ->assertDispatchedBrowserEvent('show-toast');
+
         $this->assertDatabaseHas('tasks', [
+            'id' => $task->id,
             'name' => $name,
             'description' => $description
         ]);

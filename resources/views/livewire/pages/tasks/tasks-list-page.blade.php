@@ -1,6 +1,6 @@
 <div class="container">
     <x-modal id="create-form-modal">
-        @livewire('components.tasks.task-create-form')
+        @livewire('components.tasks.task-create-update-form')
     </x-modal>
     <div class="tooltip tooltip-right" data-tip="Create a new task">
         <button

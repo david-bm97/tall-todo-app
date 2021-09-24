@@ -14,6 +14,7 @@ class TasksListPage extends Component
     protected $listeners = [
         'taskDeleted' => 'refreshTasks',
         'taskCreated' => 'refreshTasks',
+        'taskUpdated' => 'refreshTasks',
     ];
 
     public function render()
