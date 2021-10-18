@@ -44,4 +44,11 @@ class UserFactory extends Factory
             ];
         });
     }
+
+    public function withEmail(string $email)
+    {
+        return $this->state([
+            'email' => $email
+        ]);
+    }
 }
