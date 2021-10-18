@@ -6,7 +6,7 @@
         <div class="overflow-visible shadow-lg card compact side bg-base-100">
             <div class="flex-row items-center justify-between space-x-4 card-body">
                 <div class="flex">
-                    <span class="mx-4 label-text">{{ $displayName }}</span>
+                    <span class="mx-4 label-text">{{ $task->display_name }}</span>
                     @if (!$task->completed)
                         @if ($task->IsPast)
                             <div class="badge badge-error">

@@ -8,7 +8,6 @@ use Livewire\Component;
 class TaskListItem extends Component
 {
     public $task;
-    public $displayName;
 
     protected $rules = [
         'task.completed' => 'required|boolean'
@@ -30,10 +29,6 @@ class TaskListItem extends Component
     public function mount(Task $task)
     {
         $this->task = $task;
-        $this->displayName = $task->name;
-        if ($task->end_date) {
-            $this->displayName .= " ({$task->end_date->format('d-m-Y')})";
-        }
     }
 
     public function render()

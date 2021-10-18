@@ -52,6 +52,20 @@ class Task extends Model
     }
 
     /**
+     * Get the public display name of the task
+     *
+     * @return boolean
+     */
+    public function getDisplayNameAttribute()
+    {
+        $result = $this->name;
+        if ($this->end_date) {
+            $result .= " ({$this->end_date->format('d-m-Y')})";
+        }
+        return $result;
+    }
+
+    /**
      * Scope a query to order by near end_date
      *
      * @param  \Illuminate\Database\Eloquent\Builder $query

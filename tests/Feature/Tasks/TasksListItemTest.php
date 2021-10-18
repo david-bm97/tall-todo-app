@@ -80,11 +80,27 @@ class TasksListItemTest extends TestCase
         ]);
     }
 
-    public function test_has_refresh_tash_listener()
+    public function test_list_item_task_has_refresh_task_listener()
     {
-        $task = Task::factory()->create();
+        $task = Task::factory()->ofUser($this->user)->create();
         Livewire::actingAs($this->user)
             ->test('components.tasks.task-list-item', ['task' => $task])
             ->emit("refresh-task-item-{$task->id}");
+    }
+
+    public function test_list_item_task_updates_task()
+    {
+        $task = Task::factory()->ofUser($this->user)->create();
+        $component = Livewire::actingAs($this->user)
+            ->test('components.tasks.task-list-item', ['task' => $task])
+            ->assertSet('task.display_name', $task->display_name);
+
+        $task->update([
+            'name' => 'Test name'
+        ]);
+
+        $component
+            ->emit("refresh-task-item-{$task->id}")
+            ->assertSet('task.display_name', $task->display_name);
     }
 }
